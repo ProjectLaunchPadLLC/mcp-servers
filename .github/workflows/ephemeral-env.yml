@@ -1,0 +1,37 @@
+name: Ephemeral Worker Environment
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment_name:
+        description: "Optional worker name override"
+        required: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Deploy ephemeral environment
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          if [ -n "${{ github.event.inputs.environment_name }}" ]; then
+            npm run deploy:ephemeral -- --name "${{ github.event.inputs.environment_name }}"
+          else
+            npm run deploy:ephemeral
+          fi
