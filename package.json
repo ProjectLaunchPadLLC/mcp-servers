@@ -1,0 +1,35 @@
+{
+  "name": "mcp-servers",
+  "version": "1.0.0",
+  "description": "InfoWeave orchestration server and Cloudflare worker workflows",
+  "main": "dist/src/server.js",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "worker:dev": "wrangler dev src/worker.ts --local",
+    "deploy:ephemeral": "tsx scripts/deploy-ephemeral.ts",
+    "deploy:ephemeral:cleanup": "tsx scripts/deploy-ephemeral.ts --cleanup",
+    "ci": "npm run typecheck && npm run test && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ProjectLaunchPadLLC/mcp-servers.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/ProjectLaunchPadLLC/mcp-servers/issues"
+  },
+  "homepage": "https://github.com/ProjectLaunchPadLLC/mcp-servers#readme",
+  "devDependencies": {
+    "@types/node": "^26.1.1",
+    "tsx": "^4.23.1",
+    "typescript": "^7.0.2",
+    "vitest": "^4.1.10",
+    "wrangler": "^4.114.0"
+  }
+}

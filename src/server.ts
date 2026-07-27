@@ -32,6 +32,14 @@ export class InfoWeaveServer {
 
     return workflow;
   }
+
+  getContextSnapshot() {
+    return this.context.snapshot();
+  }
+
+  getProvenanceHistory() {
+    return this.provenance.all();
+  }
 }
 
 export default InfoWeaveServer;
